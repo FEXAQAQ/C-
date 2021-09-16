@@ -1,2 +1,1 @@
-# C sharp
-# 隨手筆記
+# C sharp 筆記
