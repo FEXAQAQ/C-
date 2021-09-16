@@ -1,0 +1,33 @@
+# 用 Unity 印出 Lua Table 裡的類型
+
+//Msg是Server回傳資料，轉成Json格式
+local Msg = rapidJson.decode(data)
+DebugLogTable(Msg)
+
+
+key = ""
+function DebugLogTable(table,level)
+    level =  level or 1
+    local indent = ""
+    local content = ""
+    for  i = 1, level do
+        indent = indent.."  "
+    end
+    if key ~= "" then
+        CS.UnityEngine.Debug.Log(indent..key.." ".."=".." ".."{")
+    else
+        CS.UnityEngine.Debug.Log(indent.."{")
+    end
+    key = ""
+    for k, v in pairs(table) do
+        if type(v) == "table" then
+            key = k
+            DebugLogTable(v,level+1)
+        else
+              content = content..string.format("%s%s = %s",indent.." ",tostring(k),tostring(v))
+             
+        end
+    end
+    CS.UnityEngine.Debug.Log(content)
+    CS.UnityEngine.Debug.Log(indent.."}")
+end
